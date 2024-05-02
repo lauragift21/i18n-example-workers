@@ -1,15 +1,6 @@
-import {
-  getAssetFromKV,
-  defaultKeyModifier,
-} from '@cloudflare/kv-asset-handler'
 import parser from 'accept-language-parser'
-
 // do not set to true in production!
 const DEBUG = false
-
-addEventListener('fetch', event => {
-  event.respondWith(handleEvent(event))
-})
 
 const strings = {
   de: {
@@ -52,8 +43,8 @@ class ElementHandler {
   }
 }
 
-async function handleEvent(event) {
-  const url = new URL(event.request.url)
+export async function onRequestPost({ request }) {
+  const url = new URL(request.url)
   try {
     let options = {}
     if (DEBUG) {
@@ -63,11 +54,12 @@ async function handleEvent(event) {
         },
       }
     }
-    const languageHeader = event.request.headers.get('Accept-Language')
+    const languageHeader = request.headers.get('Accept-Language')
     const language = parser.pick(['de', 'jp'], languageHeader)
     const countryStrings = strings[language] || {}
 
-    const response = await getAssetFromKV(event, options)
+    // what is the response now?
+    const response = await getAssetFromKV(request, options)
 
     return new HTMLRewriter()
       .on('[data-i18n-key]', new ElementHandler(countryStrings))
@@ -78,9 +70,10 @@ async function handleEvent(event) {
         status: 404,
       })
     } else {
-      return new Response(`"${defaultKeyModifier(url.pathname)}" not found`, {
+      return new Response(`"${url.pathname}" not found`, {
         status: 404,
       })
     }
   }
+  
 }

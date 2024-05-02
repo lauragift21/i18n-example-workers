@@ -5,8 +5,8 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.{js,css,json,md}'"
+    "dev": "wrangler pages dev ./public --compatibility-date=2024-01-29",
+    "deploy": "wrangler pages deploy ./public"
   },
   "author": "Kristian Freeman <kristian@kristianfreeman.com>",
   "license": "MIT",
