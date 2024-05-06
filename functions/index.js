@@ -15,7 +15,7 @@ const strings = {
       'Das Tutorial für dieses Projekt finden Sie in der Cloudflare Workers-Dokumentation.',
     copyright: 'Design von HTML5 UP.',
   },
-  jp: {
+  ja: {
     title: 'サンプルサイト',
     headline: 'サンプルサイト',
     subtitle:
@@ -56,7 +56,7 @@ export async function onRequest(context) {
       }
     }
     const languageHeader = request.headers.get('Accept-Language')
-    const language = parser.pick(['de', 'jp'], languageHeader)
+    const language = parser.pick(['de', 'ja'], languageHeader)
     const countryStrings = strings[language] || {}
 
     const response = await env.ASSETS.fetch(request)
