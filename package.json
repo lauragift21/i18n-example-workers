@@ -5,9 +5,8 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",
   "scripts": {
-    "dev": "wrangler dev",
-    "pages:dev": "wrangler pages dev ./public",
-    "deploy": "wrangler pages deploy ./public"
+    "dev": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
   },
   "author": "Kristian Freeman <kristian@kristianfreeman.com>",
   "license": "MIT",
