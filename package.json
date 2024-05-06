@@ -5,7 +5,8 @@
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",
   "scripts": {
-    "dev": "wrangler pages dev ./public --compatibility-date=2024-01-29",
+    "dev": "wrangler dev",
+    "pages:dev": "wrangler pages dev ./public",
     "deploy": "wrangler pages deploy ./public"
   },
   "author": "Kristian Freeman <kristian@kristianfreeman.com>",
@@ -13,5 +14,8 @@
   "dependencies": {
     "@cloudflare/kv-asset-handler": "0.0.2",
     "accept-language-parser": "^1.5.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.53.0"
   }
 }

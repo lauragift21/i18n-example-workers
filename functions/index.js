@@ -1,4 +1,5 @@
 import parser from 'accept-language-parser'
+
 // do not set to true in production!
 const DEBUG = false
 
@@ -43,8 +44,8 @@ class ElementHandler {
   }
 }
 
-export async function onRequestPost({ request }) {
-  const url = new URL(request.url)
+export async function onRequest(context) {
+  const { request, env } = context;
   try {
     let options = {}
     if (DEBUG) {
@@ -58,9 +59,7 @@ export async function onRequestPost({ request }) {
     const language = parser.pick(['de', 'jp'], languageHeader)
     const countryStrings = strings[language] || {}
 
-    // what is the response now?
-    const response = await getAssetFromKV(request, options)
-
+    const response = await env.ASSETS.fetch(request)
     return new HTMLRewriter()
       .on('[data-i18n-key]', new ElementHandler(countryStrings))
       .transform(response)
@@ -70,10 +69,7 @@ export async function onRequestPost({ request }) {
         status: 404,
       })
     } else {
-      return new Response(`"${url.pathname}" not found`, {
-        status: 404,
-      })
+      return env.ASSETS.fetch(request)
     }
   }
-  
 }
